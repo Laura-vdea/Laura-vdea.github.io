@@ -31,6 +31,20 @@
             font-size: 16px;
         }
 
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -143,7 +157,10 @@
     <!-- Modal -->
     <div class="modal" id="postModal" style="display:none;">
         <div class="modal-content">
-            <span class="close-btn">&times;</span>
+            <div class="modal-header">
+                <span class="close-btn">&times;</span>
+                <h2>블로그 포스트</h2>
+            </div>
             <div id="postContent"></div>
         </div>
     </div>
@@ -257,10 +274,20 @@
                     element.find('.fc-title').append("<br/><span class='fc-description'>" + event.description + "</span>");
                 }
             });
+
+            $('.close-btn').click(function() {
+                $('#postModal').css('display', 'none');
+            });
+
+            $(window).click(function(event) {
+                if (event.target == $('#postModal')[0]) {
+                    $('#postModal').css('display', 'none');
+                }
+            });
         });
 
         function fetchPostsForDate(date) {
-            const url = '/_post/2024-07-29-블로그-첫-글.html';
+            const url = `/_post/${date}-블로그-첫-글.html`;
             $.ajax({
                 url: url,
                 success: function(data) {
@@ -278,15 +305,7 @@
             $('#postModal').css('display', 'block');
         }
 
-        $('.close-btn').click(function() {
-            $('#postModal').css('display', 'none');
-        });
 
-        $(window).click(function(event) {
-            if (event.target == $('#postModal')[0]) {
-                $('#postModal').css('display', 'none');
-            }
-        });
     </script>
 </body>
 
