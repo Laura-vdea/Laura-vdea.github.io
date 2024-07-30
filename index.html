@@ -61,7 +61,7 @@
         .modal-content {
             background-color: #fefefe;
             margin: 5% auto;
-            padding: 20px;
+            padding: 0;
             border: 1px solid #888;
             width: 80%;
             border-radius: 10px;
@@ -98,6 +98,69 @@
             cursor: pointer;
         }
 
+        .chrome-header {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            background-color: #f2f2f2;
+            border-bottom: 1px solid #ddd;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .circle.red {
+            background-color: #ff605c;
+        }
+
+        .circle.yellow {
+            background-color: #ffbd44;
+        }
+
+        .circle.green {
+            background-color: #00ca4e;
+        }
+
+        .chrome-content {
+            padding: 20px;
+        }
+        
+        .chrome-style {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.2), 0 1px 4px rgba(0, 0, 0, 0.24);
+            overflow: hidden;
+        }
+
+        .chrome-header .circle {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        .chrome-header .red {
+            background: #ff5f56;
+        }
+
+        .chrome-header .yellow {
+            background: #ffbd2e;
+        }
+
+        .chrome-header .green {
+            background: #27c93f;
+        }
+
+        .chrome-content {
+            padding: 50px;
+        }
+
         .fc-event {
             cursor: pointer;
         }
@@ -118,6 +181,10 @@
 
         .fc-event button:hover {
             background-color: #8cc1fa;
+        }
+
+        .chrome-content h2 {
+            margin-top: 0;
         }
     </style>
 </head>
@@ -191,12 +258,13 @@
 
     <!-- Modal -->
     <div class="modal" id="postModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <span class="close-btn">&times;</span>
-                <h2>블로그 포스트</h2>
+        <div class="modal-content chrome-style">
+            <div class="chrome-header">
+                <div class="circle red"></div>
+                <div class="circle yellow"></div>
+                <div class="circle green"></div>
             </div>
-            <div id="postContent"></div>
+            <div class="chrome-content" id="postContent"></div>
         </div>
     </div>
 
@@ -324,6 +392,16 @@
                         fetchPostContent(url);
                     });
                     element.append(button);
+                }
+            });
+
+            $('.circle.red').click(function () {
+                $('#postModal').css('display', 'none');
+            });
+
+            $(window).click(function (event) {
+                if (event.target == $('#postModal')[0]) {
+                    $('#postModal').css('display', 'none');
                 }
             });
 
