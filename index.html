@@ -338,8 +338,11 @@
         });
 
         function fetchPostContent(url) {
+            const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // CORS 프록시 URL
+            const proxiedUrl = proxyUrl + url;
+
             $.ajax({
-                url: url,
+                url: proxiedUrl,
                 success: function (data) {
                     showModal(data);
                 },
