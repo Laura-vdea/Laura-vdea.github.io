@@ -306,7 +306,7 @@
         }
 
         .markdown-body code {
-            background-color: rgba(27,31,35,.05);
+            background-color: #f6f8fa;
             border-radius: 3px;
             font-size: 85%;
             padding: .2em .4em;
@@ -317,6 +317,24 @@
             padding: 16px;
             overflow: auto;
             border-radius: 3px;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #0366d6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .copy-btn:hover {
+            background: #024d9c;
         }
 
         /* Responsive Styles */
@@ -489,7 +507,7 @@
                     <div class="box">
                         <i class="fas fa-laptop-code"></i>
                         <div class="text">Programming Languages</div>
-                        <p>C, C++, Python, Java</p>
+                        <p>C, C++, Python</p>
                     </div>
                 </div>
                 <div class="card">
@@ -632,6 +650,7 @@
                 .then(markdown => {
                     const htmlContent = marked(markdown);
                     showModal(htmlContent);
+                    addCopyButtons();
                 })
                 .catch(error => {
                     console.error('Error fetching the Markdown file:', error);
@@ -643,6 +662,23 @@
         function showModal(content) {
             $('#postContent').html(content);
             $('#postModal').css('display', 'block');
+        }
+
+        function addCopyButtons() {
+            $('pre').each(function () {
+                var pre = $(this);
+                var button = $('<button class="copy-btn">Copy</button>');
+                button.click(function () {
+                    var code = pre.find('code').text();
+                    navigator.clipboard.writeText(code).then(function () {
+                        alert('Code copied to clipboard!');
+                    }).catch(function (err) {
+                        alert('Failed to copy code.');
+                        console.error('Could not copy text: ', err);
+                    });
+                });
+                pre.append(button);
+            });
         }
 
         $('.menu-btn').click(function () {
