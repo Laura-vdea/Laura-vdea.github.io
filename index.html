@@ -16,6 +16,81 @@
     <script src='https://fullcalendar.io/releases/fullcalendar/3.9.0/fullcalendar.min.js'></script>
 
     <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .max-width {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .navbar {
+            position: fixed;
+            width: 100%;
+            background: #333;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .navbar .max-width {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .navbar .menu {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navbar .menu li {
+            margin: 0 10px;
+        }
+
+        .navbar .menu li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+        }
+
+        .navbar .menu li a:hover {
+            color: #ffcc99;
+        }
+
+        .navbar .menu-btn {
+            display: none;
+            font-size: 22px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .scroll-up-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            height: 45px;
+            width: 45px;
+            background: #ffcc99;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 22px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            display: none;
+        }
+
         .tags {
             display: flex;
             justify-content: center;
@@ -130,7 +205,7 @@
         .chrome-content {
             padding: 20px;
         }
-        
+
         .chrome-style {
             background: #fff;
             border-radius: 8px;
@@ -185,6 +260,44 @@
 
         .chrome-content h2 {
             margin-top: 0;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .navbar .menu {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .navbar .menu-btn {
+                display: block;
+            }
+
+            .navbar .menu.active {
+                display: flex;
+            }
+
+            .chrome-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .scroll-up-btn {
+                right: 10px;
+                bottom: 10px;
+                height: 35px;
+                width: 35px;
+            }
+
+            .modal-content {
+                width: 90%;
+            }
+
+            .navbar .menu li a {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
@@ -310,6 +423,36 @@
         </div>
     </section>
 
+    <!-- skills section start -->
+    <section class="skills" id="skills">
+        <div class="max-width">
+            <h2 class="title">Skills</h2>
+            <div class="skills-content">
+                <div class="card">
+                    <div class="box">
+                        <i class="fas fa-laptop-code"></i>
+                        <div class="text">Programming Languages</div>
+                        <p>C, C++, Python, Java</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="box">
+                        <i class="fas fa-tools"></i>
+                        <div class="text">Tools & Technologies</div>
+                        <p>Git, Docker, Jenkins, AWS</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="box">
+                        <i class="fas fa-cogs"></i>
+                        <div class="text">Frameworks</div>
+                        <p>Spring, Django, Flask</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- contact section start -->
     <section class="contact" id="contact">
         <div class="max-width">
@@ -370,6 +513,11 @@
                     title: '1 posts',
                     start: '2024-07-29',
                     description: '블로그-첫-글'
+                },
+                {
+                    title: '1 posts',
+                    start: '2024-07-30',
+                    description: 'veda-study-1'
                 }],
                 dayClick: function (date, jsEvent, view) {
                     const formattedDate = date.format('YYYY-MM-DD');
@@ -381,7 +529,7 @@
                         const url = `https://laura-vdea.github.io/post/${formattedDate}-${event.description}.md`;
                         fetchPostContent(url);
                     } else {
-                        alert('No post available for this date.');
+                        alert('해당 날짜에 포스팅이 아직 존재하지 않습니다.');
                     }
                 },
                 eventRender: function (event, element) {
@@ -439,6 +587,10 @@
             $('#postContent').html(content);
             $('#postModal').css('display', 'block');
         }
+
+        $('.menu-btn').click(function () {
+            $('.menu').toggleClass('active');
+        });
     </script>
 </body>
 
