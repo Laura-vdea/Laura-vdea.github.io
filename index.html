@@ -38,6 +38,7 @@
             padding: 10px;
             background-color: #f2f2f2;
             border-bottom: 1px solid #ddd;
+            border-radius: 10px 10px 0 0;
         }
 
         .modal-header h2 {
@@ -67,6 +68,18 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             overflow: auto;
             position: relative;
+            animation: modalFadeIn 0.5s;
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .close-btn {
@@ -173,14 +186,11 @@
             <div id="calendar-container">
                 <div id="calendar"></div>
             </div>
-
-            <!-- 버튼 하이퍼링크 테스트 -->
-            <!-- <button id="open-post">Open Post</button> -->
         </div>
     </section>
 
     <!-- Modal -->
-    <div class="modal" id="postModal" style="display:none;">
+    <div class="modal" id="postModal">
         <div class="modal-content">
             <div class="modal-header">
                 <span class="close-btn">&times;</span>
@@ -285,20 +295,9 @@
 
     <script src="script.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#calendar').fullCalendar({
-                events: [
-                {
-                    title: 'veda OT',
-                    start: '2024-07-11',
-                    description: 'veda-OT한-날'
-                }
-                    ,{
-                    title: 'veda 시작',
-                    start: '2024-07-15',
-                    description: 'veda-시작한-날'
-                },
-                {
+                events: [{
                     title: '1 posts',
                     start: '2024-07-29',
                     description: '블로그-첫-글'
@@ -308,42 +307,35 @@
                     start: '2024-07-30',
                     description: 'veda-글'
                 }],
-                dayClick: function(date, jsEvent, view) {
+                dayClick: function (date, jsEvent, view) {
                     const formattedDate = date.format('YYYY-MM-DD');
-                    const event = $('#calendar').fullCalendar('clientEvents', function(event) {
+                    const event = $('#calendar').fullCalendar('clientEvents', function (event) {
                         return event.start.format('YYYY-MM-DD') === formattedDate;
                     })[0];
 
                     if (event) {
-                        const url = `_post/${formattedDate}-${event.description}.html`;
-                        window.open(url, '_blank');
+                        const url = `https://laura-vdea.github.io/_post/${formattedDate}-${event.description}.html`;
+                        fetchPostContent(url);
                     } else {
                         alert('No post available for this date.');
                     }
                 },
-                eventRender: function(event, element) {
+                eventRender: function (event, element) {
                     const button = $('<button>Open Post</button>');
-                    button.on('click', function() {
+                    button.on('click', function () {
                         const formattedDate = event.start.format('YYYY-MM-DD');
-                        const url = `_post/${formattedDate}-${event.description}.html`;
-                        window.open(url, '_blank');
+                        const url = `https://laura-vdea.github.io/_post/${formattedDate}-${event.description}.html`;
+                        fetchPostContent(url);
                     });
                     element.append(button);
                 }
             });
 
-            // 테스트 OK (주석 처리)
-            // document.getElementById('open-post').addEventListener('click', function() {
-            //     const formattedDate = '2024-07-29';  // 예제 날짜
-            //     const url = `_post/${formattedDate}-블로그-첫-글.html`;
-            //     window.open(url, '_blank');
-            // });
-
-            $('.close-btn').click(function() {
+            $('.close-btn').click(function () {
                 $('#postModal').css('display', 'none');
             });
 
-            $(window).click(function(event) {
+            $(window).click(function (event) {
                 if (event.target == $('#postModal')[0]) {
                     $('#postModal').css('display', 'none');
                 }
@@ -353,10 +345,10 @@
         function fetchPostContent(url) {
             $.ajax({
                 url: url,
-                success: function(data) {
+                success: function (data) {
                     showModal(data);
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(`Error fetching the HTML file: ${url}`, error);
                     alert('Failed to load the post content. Please check the console for details.');
                 }
