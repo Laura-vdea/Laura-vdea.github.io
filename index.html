@@ -292,7 +292,7 @@
     <footer>
         <span>Created By <a href="#">jeewoo19930315@gmail.com</a> | <span class="far fa-copyright"></span> 2024.</span>
     </footer>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/2.1.3/marked.min.js"></script>
     <script src="script.js"></script>
     <script>
@@ -310,7 +310,7 @@
                     })[0];
 
                     if (event) {
-                        const url = `https://laura-vdea.github.io/posts/${formattedDate}-${event.description}.md`;
+                        const url = `https://laura-vdea.github.io/post/${formattedDate}-${event.description}.md`;
                         fetchPostContent(url);
                     } else {
                         alert('No post available for this date.');
@@ -320,7 +320,7 @@
                     const button = $('<button>Open Post</button>');
                     button.on('click', function () {
                         const formattedDate = event.start.format('YYYY-MM-DD');
-                        const url = `https://laura-vdea.github.io/posts/${formattedDate}-${event.description}.md`;
+                        const url = `https://laura-vdea.github.io/post/${formattedDate}-${event.description}.md`;
                         fetchPostContent(url);
                     });
                     element.append(button);
