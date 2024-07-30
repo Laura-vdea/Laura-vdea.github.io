@@ -309,7 +309,7 @@
                     })[0];
 
                     if (event) {
-                        const url = `https://laura-vdea.github.io/_post/${formattedDate}-${event.description}.html`;
+                        const url = `https://laura-vdea.github.io/posts/${formattedDate}-${event.description}.html`;
                         fetchPostContent(url);
                     } else {
                         alert('No post available for this date.');
@@ -319,7 +319,7 @@
                     const button = $('<button>Open Post</button>');
                     button.on('click', function () {
                         const formattedDate = event.start.format('YYYY-MM-DD');
-                        const url = `https://laura-vdea.github.io/_post/${formattedDate}-${event.description}.html`;
+                        const url = `https://laura-vdea.github.io/posts/${formattedDate}-${event.description}.html`;
                         fetchPostContent(url);
                     });
                     element.append(button);
