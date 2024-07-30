@@ -84,6 +84,28 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        .fc-event {
+            cursor: pointer;
+        }
+
+        .fc-event .fc-title {
+            margin-bottom: 5px;
+        }
+
+        .fc-event button {
+            background-color: #95a8e1;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .fc-event button:hover {
+            background-color: #8cc1fa;
+        }
     </style>
 </head>
 
@@ -151,6 +173,9 @@
             <div id="calendar-container">
                 <div id="calendar"></div>
             </div>
+
+            <!-- 버튼 하이퍼링크 테스트 -->
+            <!-- <button id="open-post">Open Post</button> -->
         </div>
     </section>
 
@@ -265,15 +290,43 @@
                 events: [{
                     title: '1 posts',
                     start: '2024-07-29',
-                    description: '블로그 첫 글'
+                    description: '블로그-첫-글'
+                },
+                {
+                    title: '1 posts',
+                    start: '2024-07-30',
+                    description: 'veda-글'
                 }],
                 dayClick: function(date, jsEvent, view) {
-                    fetchPostsForDate(date.format());
+                    const formattedDate = date.format('YYYY-MM-DD');
+                    const event = $('#calendar').fullCalendar('clientEvents', function(event) {
+                        return event.start.format('YYYY-MM-DD') === formattedDate;
+                    })[0];
+
+                    if (event) {
+                        const url = `_post/${formattedDate}-${event.description}.html`;
+                        window.open(url, '_blank');
+                    } else {
+                        alert('No post available for this date.');
+                    }
                 },
                 eventRender: function(event, element) {
-                    element.find('.fc-title').append("<br/><span class='fc-description'>" + event.description + "</span>");
+                    const button = $('<button>Open Post</button>');
+                    button.on('click', function() {
+                        const formattedDate = event.start.format('YYYY-MM-DD');
+                        const url = `_post/${formattedDate}-${event.description}.html`;
+                        window.open(url, '_blank');
+                    });
+                    element.append(button);
                 }
             });
+
+            // 테스트 OK (주석 처리)
+            // document.getElementById('open-post').addEventListener('click', function() {
+            //     const formattedDate = '2024-07-29';  // 예제 날짜
+            //     const url = `_post/${formattedDate}-블로그-첫-글.html`;
+            //     window.open(url, '_blank');
+            // });
 
             $('.close-btn').click(function() {
                 $('#postModal').css('display', 'none');
@@ -286,8 +339,7 @@
             });
         });
 
-        function fetchPostsForDate(date) {
-            const url = `/_post/${date}-블로그-첫-글.html`;
+        function fetchPostContent(url) {
             $.ajax({
                 url: url,
                 success: function(data) {
@@ -304,8 +356,6 @@
             $('#postContent').html(content);
             $('#postModal').css('display', 'block');
         }
-
-
     </script>
 </body>
 
