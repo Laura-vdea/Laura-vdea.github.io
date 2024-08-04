@@ -49,6 +49,63 @@
         </div>
     </section>
 
+    <!-- terminal section start -->
+    <section class="terminal-container">
+        <div class="terminal">
+            <div class="terminal-header">
+                <div>
+                    <div class="circle red"></div>
+                    <div class="circle yellow"></div>
+                    <div class="circle green"></div>
+                </div>
+                <div>터미널</div>
+            </div>
+            <pre id="terminal-output">
+// 람다 함수 매크로
+#define lambda(return_type, function_body) ({ \
+return_type __fn__ function_body \
+__fn__; \
+})
+
+// Example 구조체 정의
+typedef struct {
+void (*hello_print)();
+} Example;
+
+// hello_print 함수 정의
+void hello_print() {
+printf("Hello 한화비전베다!\n");
+}
+
+// main 함수
+int main() {
+// Example 구조체 메모리 할당
+Example* example = malloc(sizeof(Example));
+if (!example) {
+perror("Failed to allocate memory");
+return 1; // 메모리 할당 실패 시 프로그램 종료
+}
+
+// hello_print 함수 할당
+example->hello_print = hello_print;
+
+// 결과 출력
+example->hello_print();
+
+// 동적 메모리 해제
+free(example);
+
+return 0;
+}
+            </pre>
+            <div class="terminal-container">
+
+                <span class="command-input">user@portfolio:~$ gcc main.c -o main<br></span>
+                <div id="terminal-result"></div>
+            </div>
+        </div>
+    </section>
+
     <!-- about section start -->
     <section class="about" id="about">
         <div class="max-width">
@@ -329,6 +386,14 @@
         $('.menu-btn').click(function () {
             $('.menu').toggleClass('active');
         });
+
+        $(document).ready(function () {
+            // 터미널 출력 시뮬레이션
+            setTimeout(function () {
+                $('#terminal-result').append('<span class="command-input">user@portfolio:~$ ./main<br>Hello 한화비전베다!<br></span>');
+            }, 2000); // 2초 후 출력
+        });
+        
     </script>
 </body>
 
