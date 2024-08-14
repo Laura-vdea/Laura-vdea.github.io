@@ -328,25 +328,23 @@ return 0;
                     <div class="row">
                         <i class="fab fa-github"></i>
                         <div class="info">
-                            <div class="head">GitHub VEDA</div>
-                            <div class="sub-title">
-                                <a href="https://github.com/Laura-vdea" target="_blank">Visit my GitHub Profile(한화 비전 베다)</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <i class="fab fa-github"></i>
-                        <div class="info">
                             <div class="head">GitHub</div>
                             <div class="sub-title">
                                 <a href="https://github.com/Azabell1993" target="_blank">Visit my GitHub Profile(개인 깃허브)</a>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="row">
+                        <i class="fab fa-github"></i>
+                        <div class="info">
+                            <div class="head">GitHub VEDA</div>
+                            <div class="sub-title">
+                                <a href="https://github.com/Laura-vdea" target="_blank">Visit my GitHub Profile(베다 프로젝트 깃허브)</a>
+                            </div>
+                        </div>
+                    </div>
             </div>
-            <div class="thankyou">Thank You!</div>
-    </section>
+        </section>
 
     <!-- footer section start -->
     <footer>
@@ -377,6 +375,11 @@ return 0;
                     title: 'VEDA 1기 4주차 기록',
                     start: '2024-08-11',
                     description: 'side-study-3'
+                },
+                {
+                    title: '[QT]베다은행 미니 프로그램',
+                    start: '2024-08-14',
+                    description: 'github-icon'
                 }],
                 dayClick: function (date, jsEvent, view) {
                     const formattedDate = date.format('YYYY-MM-DD');
@@ -399,6 +402,22 @@ return 0;
                         fetchPostContent(url);
                     });
                     element.append(button);
+                },
+
+                // calancer github Icon handler
+                eventRender: function (event, element) {
+                    if (event.description === 'github-icon') {
+                        const button = $('<a href="https://github.com/Azabell1993/Veda_bank_project" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>');
+                        element.append(button);
+                    } else {
+                        const button = $('<button>Open Post</button>');
+                        button.on('click', function () {
+                            const formattedDate = event.start.format('YYYY-MM-DD');
+                            const url = `https://laura-vdea.github.io/post/${formattedDate}-${event.description}.md`;
+                            fetchPostContent(url);
+                        });
+                        element.append(button);
+                    }
                 }
             });
 
@@ -475,7 +494,6 @@ return 0;
                 $('#terminal-result').append('<span class="command-input">user@portfolio:~$ ./main<br>Hello 한화비전베다!<br></span>');
             }, 2000); // 2초 후 출력
         });
-        
     </script>
 </body>
 
