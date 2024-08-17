@@ -382,6 +382,11 @@ return 0;
                     description: 'github-icon'
                 },
                 {
+                    title: '[QT]kernel_OS',
+                    start: '2024-08-17',
+                    description: 'github-icon_kernel'
+                },
+                {
                     title: 'VEDA 1기 5주차 기록',
                     start: '2024-08-18',
                     description: 'side-study-4'
@@ -414,7 +419,11 @@ return 0;
                     if (event.description === 'github-icon') {
                         const button = $('<a href="https://github.com/Azabell1993/Veda_bank_project" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>');
                         element.append(button);
-                    } else {
+                    } else if (event.description === 'github-icon_kernel') {
+                        const button = $('<a href="https://github.com/Azabell1993/QT_Kernel_OS" target="_blank"><i class="fab fa-github"></i> View on GitHub</a>');
+                        element.append(button);
+                    } 
+                    else {
                         const button = $('<button>Open Post</button>');
                         button.on('click', function () {
                             const formattedDate = event.start.format('YYYY-MM-DD');
